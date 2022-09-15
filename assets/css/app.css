@@ -1,0 +1,52 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@layer base {
+    .regnefelt {
+        @apply
+        border-4 
+        rounded-lg 
+        border-black 
+        text-xl 
+        font-bold 
+        focus:border-RegiYellow 
+        bg-slate-200
+        py-2
+        shadow-[-4px_4px_0px_0px]
+    }
+    button {
+        @apply 
+        /* Basics */
+        bg-white 
+        font-bold 
+        text-xl
+
+        /* Borders */
+        border-4 
+        rounded-lg 
+        border-black 
+
+        /* Padding */
+        px-4 
+        py-4 
+        
+        /* Shadow */
+        shadow-[-4px_4px_0px_0px]
+
+        /* Hover */
+        hover:border-RegiYellow 
+        hover:text-RegiYellow 
+        hover:-translate-x-0.5
+        hover:translate-y-0.5
+        hover:shadow-[-3px_3px_0px_0px]
+
+        /* Active */
+        active:-translate-x-1
+        active:translate-y-1
+        active:shadow-[-2px_2px_0px_0px]
+        
+        transition-all
+        duration-100;
+    }
+}
