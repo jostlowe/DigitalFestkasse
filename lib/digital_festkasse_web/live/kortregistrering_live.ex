@@ -6,8 +6,6 @@ defmodule DigitalFestkasseWeb.KortregistreringLive do
 
   @reset_time 30
   def mount(%{"kortnummer" => kortnummer}, %{}, socket) do
-    :timer.send_interval(1000, :reset_timer_tick)
-
     socket =
       assign(socket,
         reset_timer: @reset_time,
@@ -18,16 +16,13 @@ defmodule DigitalFestkasseWeb.KortregistreringLive do
     {:ok, socket}
   end
 
-  def handle_info(:reset_timer_tick, socket) do
-    if socket.assigns.reset_timer > 0 do
-      {:noreply, update(socket, :reset_timer, fn timer -> timer - 1 end)}
-    else
-      {:noreply, redirect(socket, to: "/")}
-    end
+  def handle_info(:reset, socket) do
+    {:noreply, redirect(socket, to: "/")}
   end
 
   def handle_event("registrer_kort", %{"brukernavn" => brukernavn, "passord" => passord}, socket) do
     Logger.debug("Registrerer kort for bruker #{brukernavn}")
-    {:noreply, assign(socket, registrering_godkjent: true, reset_timer: 3)}
+    :timer.send_after(3000, :reset)
+    {:noreply, assign(socket, registrering_godkjent: true)}
   end
 end

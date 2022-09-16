@@ -10,11 +10,10 @@
             <img src={Routes.static_path(@socket, "/images/felix_surprise.svg")} alt="" class="w-40">
 
             <form phx-submit="registrer_kort" class="flex flex-col gap-4">
-                <input autofocus type="text" name="brukernavn" id="brukernavn" class="col-span-3 regnefelt text-center" phx-debounce="200" placeholder="Brukernavn">
-                <input autofocus type="password" name="passord" id="passord" class="col-span-3 regnefelt text-center" phx-debounce="200" placeholder="Passord">
+                <input autofocus type="text" name="brukernavn" class="col-span-3 regnefelt text-center" placeholder="Brukernavn">
+                <input type="password" name="passord" class="col-span-3 regnefelt text-center" placeholder="Passord">
                 <button type="submit" class="bg-RegiGreen">Registrer Kort</button>
             </form>
-            <div class="py-8"> Nullstiller om <%=@reset_timer%> sekunder</div>
         </div>
     </div>
 
@@ -26,4 +25,5 @@
             </div>
         </div>
     </div>
+
 </div>

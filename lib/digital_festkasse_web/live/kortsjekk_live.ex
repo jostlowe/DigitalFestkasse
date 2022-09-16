@@ -14,6 +14,8 @@ defmodule DigitalFestkasseWeb.KortsjekkLive do
     # Sjekk kortnummer mot RegiWeb her og hent konto_id
     konto_id = 123
 
+    HTTPoison.get("https://regi.samfundet.no") |> IO.inspect()
+
     {:noreply,
      redirect(socket,
        to: Routes.live_path(socket, KryssesideLive, konto_id: konto_id)
