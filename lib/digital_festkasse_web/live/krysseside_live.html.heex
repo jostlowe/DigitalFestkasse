@@ -1,0 +1,34 @@
+<div class="flex items-center h-screen justify-center flex-col"> 
+
+    <div class={if @kryss_godkjent, do: "blur-md opacity-30"}>
+        <div class="flex items-center h-screen justify-center flex-col">
+            <div class="grid grid-cols-3 gap-4 place-items-stretch w-80" >
+                <input type="text" name="derp" id="" value={"Total: #{@sum},-"} class="col-span-3 regnefelt">
+                <button phx-click="oppdater_sum" phx-value-pris="30" class="col-span-2 bg-amber-100"> Pilsssss</button>
+                <button phx-click="oppdater_sum" phx-value-pris="25"> Brus </button>
+                <button phx-click="oppdater_sum" phx-value-pris="100"> 100 </button>
+                <button phx-click="oppdater_sum" phx-value-pris="50"> 50 </button>
+                <button phx-click="oppdater_sum" phx-value-pris="20"> 20 </button>
+                <button phx-click="oppdater_sum" phx-value-pris="10"> 10 </button>
+                <button phx-click="oppdater_sum" phx-value-pris="5"> 5 </button>
+                <button phx-click="oppdater_sum" phx-value-pris="1"> 1 </button>
+
+                <button phx-click="oops" class="bg-RegiRod col-span-1"> Oops </button>
+                <button phx-click="kryss" class="bg-RegiGreen col-span-2"> Kryss </button>
+
+            </div>
+
+            <div class="py-8"> Nullstiller om <%=@reset_timer%> sekunder</div>
+        </div>
+    </div>
+
+    <div class="fixed">
+        <div class={unless @kryss_godkjent, do: "hidden"}>
+            <div class="font-bold text-4xl flex flex-col items-center">
+                <img src={Routes.static_path(@socket, "/images/felix.svg")} alt="" class="py-8 animate-bounce w-24">
+                <p>Krysset <%= @sum %> kroner på Knut </p> 
+            </div>
+        </div>
+    </div>
+
+</div>

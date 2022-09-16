@@ -16,7 +16,9 @@ defmodule DigitalFestkasseWeb.Router do
 
   scope "/", DigitalFestkasseWeb do
     pipe_through :browser
-    live "/", ThermostatLive
+    live "/krysseside", KryssesideLive
+    live "/kortregistrering", KortregistreringLive
+    live "/", KortsjekkLive
   end
 
   # Other scopes may use custom stacks.

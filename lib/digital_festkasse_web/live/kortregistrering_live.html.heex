@@ -1,0 +1,29 @@
+<div class="flex items-center h-screen justify-center flex-col"> 
+    
+    <div class={if @registrering_godkjent, do: "blur-md opacity-30"}> 
+        <div class="flex items-center justify-center flex-col">
+            <div class="flex items-center flex-col py-8">
+                <p class="font-bold text-6xl"> Wupsi! </p>
+                <p class="font-bold text-xl"> Kortet ditt ser ikke ut til å være registrert</p>
+                <p class="font-bold text-xl"> Frykt ikke! Du kan registrere kortet ditt her</p>
+            </div>
+            <img src={Routes.static_path(@socket, "/images/felix_surprise.svg")} alt="" class="w-40">
+
+            <form phx-submit="registrer_kort" class="flex flex-col gap-4">
+                <input autofocus type="text" name="brukernavn" id="brukernavn" class="col-span-3 regnefelt text-center" phx-debounce="200" placeholder="Brukernavn">
+                <input autofocus type="password" name="passord" id="passord" class="col-span-3 regnefelt text-center" phx-debounce="200" placeholder="Passord">
+                <button type="submit" class="bg-RegiGreen">Registrer Kort</button>
+            </form>
+            <div class="py-8"> Nullstiller om <%=@reset_timer%> sekunder</div>
+        </div>
+    </div>
+
+    <div class="fixed">
+        <div class={unless @registrering_godkjent, do: "hidden"}>
+            <div class="font-bold text-4xl flex flex-col items-center">
+                <img src={Routes.static_path(@socket, "/images/felix.svg")} alt="" class="py-8 animate-bounce w-24">
+                <p> Kort registert! </p> 
+            </div>
+        </div>
+    </div>
+</div>
