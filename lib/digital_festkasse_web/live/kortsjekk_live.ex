@@ -11,19 +11,18 @@ defmodule DigitalFestkasseWeb.KortsjekkLive do
   def handle_event("sjekk_kortnummer", %{"kortnummer" => kortnummer}, socket) do
     Logger.debug("Sjekker kortnummer #{kortnummer}")
 
-    # Sjekk kortnummer mot RegiWeb her og hent konto_id
-    konto_id = 123
+    case DigitalFestkasse.hent_konto(kortnummer) do
+      {:error, _} ->
+        {:noreply,
+         redirect(socket,
+           to: Routes.live_path(socket, KortregistreringLive, kortnummer: kortnummer)
+         )}
 
-    HTTPoison.get("https://regi.samfundet.no") |> IO.inspect()
-
-    {:noreply,
-     redirect(socket,
-       to: Routes.live_path(socket, KryssesideLive, konto_id: konto_id)
-     )}
-
-    {:noreply,
-     redirect(socket,
-       to: Routes.live_path(socket, KortregistreringLive, kortnummer: kortnummer)
-     )}
+      {:ok, %{"konto_id" => konto_id, "navn" => navn}} ->
+        {:noreply,
+         redirect(socket,
+           to: Routes.live_path(socket, KryssesideLive, konto_id: konto_id, navn: navn)
+         )}
+    end
   end
 end

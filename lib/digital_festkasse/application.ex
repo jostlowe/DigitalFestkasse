@@ -13,16 +13,16 @@ defmodule DigitalFestkasse.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: DigitalFestkasse.PubSub},
       # Start the Endpoint (http/https)
-      DigitalFestkasseWeb.Endpoint,
+      DigitalFestkasseWeb.Endpoint
       # Start a worker by calling: DigitalFestkasse.Worker.start_link(arg)
       # {DigitalFestkasse.Worker, arg}
-      {WebengineKiosk,
-       {[
-          homepage: "http://localhost:4000",
-          background_color: "white",
-          progress: false,
-          sounds: false
-        ], name: Display}}
+      # {WebengineKiosk,
+      # {[
+      #    homepage: "http://localhost:4000",
+      #    background_color: "white",
+      #    progress: false,
+      #    sounds: false
+      #  ], name: Display}}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

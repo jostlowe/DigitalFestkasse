@@ -22,6 +22,12 @@ defmodule DigitalFestkasseWeb.KortregistreringLive do
 
   def handle_event("registrer_kort", %{"brukernavn" => brukernavn, "passord" => passord}, socket) do
     Logger.debug("Registrerer kort for bruker #{brukernavn}")
+
+    {:ok, wolol} =
+      DigitalFestkasse.oppdater_kortnummer(brukernavn, passord, socket.assigns.kortnummer)
+
+    Logger.debug("fikk svar #{wolol}")
+
     :timer.send_after(3000, :reset)
     {:noreply, assign(socket, registrering_godkjent: true)}
   end

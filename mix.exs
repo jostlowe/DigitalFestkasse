@@ -44,7 +44,7 @@ defmodule DigitalFestkasse.MixProject do
       {:telemetry_poller, "~> 1.0"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
-      {:webengine_kiosk, "~> 0.3.0"},
+      # {:webengine_kiosk, "~> 0.3.0"},
       {:tailwind, "~> 0.1"},
       {:httpoison, "~> 1.8"}
     ]

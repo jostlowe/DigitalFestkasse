@@ -41,6 +41,7 @@ defmodule DigitalFestkasseWeb.KryssesideLive do
   def handle_event("kryss", _, socket) do
     # Registrer kryssene i databasen her
     if socket.assigns.sum > 0 do
+      {:ok, _} = DigitalFestkasse.registrer_kryss(socket.assigns.konto_id, socket.assigns.sum)
       kryss_godkjent = true
       {:noreply, assign(socket, reset_timer: 3, kryss_godkjent: kryss_godkjent)}
     else
