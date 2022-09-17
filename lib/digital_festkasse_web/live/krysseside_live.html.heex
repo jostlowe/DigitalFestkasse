@@ -2,6 +2,10 @@
 
     <div class={if @kryss_godkjent, do: "blur-md opacity-30"}>
         <div class="flex items-center h-screen justify-center flex-col">
+
+            <h2 class="font-bold text-4xl"> Hei, <%= @navn %>! </h2> 
+            <div class="font-bold text-2xl pb-6"> Din saldo er <%= @saldo %> </div> 
+
             <div class="grid grid-cols-3 gap-4 place-items-stretch w-80" >
                 <input type="text" name="derp" id="" value={"Total: #{@sum},-"} class="col-span-3 regnefelt">
                 <button phx-click="oppdater_sum" phx-value-pris="30" class="col-span-2 bg-amber-100"> Pilsssss</button>
@@ -26,7 +30,7 @@
         <div class={unless @kryss_godkjent, do: "hidden"}>
             <div class="font-bold text-4xl flex flex-col items-center">
                 <img src={Routes.static_path(@socket, "/images/felix.svg")} alt="" class="py-8 animate-bounce w-24">
-                <p>Krysset <%= @sum %> kroner på Knut </p> 
+                <p>Krysset <%= @sum %>,- på <%= @navn %> </p> 
             </div>
         </div>
     </div>

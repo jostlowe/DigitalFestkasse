@@ -2,7 +2,7 @@ defmodule DigitalFestkasseWeb.KortregistreringLive do
   # In Phoenix v1.6+ apps, the line below should be: use MyAppWeb, :live_view
   use DigitalFestkasseWeb, :live_view
   require Logger
-  alias DigitalFestkasseWeb.KryssesideLive
+  alias DigitalFestkasseWeb.{FeilsideLive, KortregistreringLive}
 
   @reset_time 30
   def mount(%{"kortnummer" => kortnummer}, %{}, socket) do
@@ -23,12 +23,19 @@ defmodule DigitalFestkasseWeb.KortregistreringLive do
   def handle_event("registrer_kort", %{"brukernavn" => brukernavn, "passord" => passord}, socket) do
     Logger.debug("Registrerer kort for bruker #{brukernavn}")
 
-    {:ok, wolol} =
-      DigitalFestkasse.oppdater_kortnummer(brukernavn, passord, socket.assigns.kortnummer)
+    case DigitalFestkasse.oppdater_kortnummer(brukernavn, passord, socket.assigns.kortnummer) do
+      :ok ->
+        :timer.send_after(3000, :reset)
+        {:noreply, assign(socket, registrering_godkjent: true)}
 
-    Logger.debug("fikk svar #{wolol}")
+      {:error, error_msg} ->
+        {:noreply, FeilsideLive.redirect_to(socket, error_msg)}
+    end
+  end
 
-    :timer.send_after(3000, :reset)
-    {:noreply, assign(socket, registrering_godkjent: true)}
+  def redirect_to(socket, kortnummer) do
+    redirect(socket,
+      to: Routes.live_path(socket, KortregistreringLive, kortnummer: kortnummer)
+    )
   end
 end

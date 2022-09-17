@@ -3,15 +3,18 @@ defmodule DigitalFestkasseWeb.KryssesideLive do
   use DigitalFestkasseWeb, :live_view
   require Logger
 
+  alias DigitalFestkasseWeb.{FeilsideLive, KryssesideLive}
   @reset_time 30
 
-  def mount(%{"konto_id" => konto_id}, %{}, socket) do
+  def mount(%{"konto_id" => konto_id, "navn" => navn, "saldo" => saldo}, %{}, socket) do
     Logger.debug("Åpnet krysseside med konto_id #{konto_id}")
     :timer.send_interval(1000, :reset_timer_tick)
 
     socket =
       assign(socket,
         sum: 0,
+        navn: navn,
+        saldo: saldo,
         reset_timer: @reset_time,
         konto_id: konto_id,
         kryss_godkjent: false
@@ -41,11 +44,27 @@ defmodule DigitalFestkasseWeb.KryssesideLive do
   def handle_event("kryss", _, socket) do
     # Registrer kryssene i databasen her
     if socket.assigns.sum > 0 do
-      {:ok, _} = DigitalFestkasse.registrer_kryss(socket.assigns.konto_id, socket.assigns.sum)
-      kryss_godkjent = true
-      {:noreply, assign(socket, reset_timer: 3, kryss_godkjent: kryss_godkjent)}
+      case DigitalFestkasse.registrer_kryss(socket.assigns.konto_id, socket.assigns.sum) do
+        :ok ->
+          kryss_godkjent = true
+          {:noreply, assign(socket, reset_timer: 3, kryss_godkjent: kryss_godkjent)}
+
+        {:error, error_msg} ->
+          {:noreply, FeilsideLive.redirect_to(socket, error_msg)}
+      end
     else
       {:noreply, socket}
     end
+  end
+
+  def redirect_to(socket, konto_id, navn, saldo) do
+    redirect(socket,
+      to:
+        Routes.live_path(socket, KryssesideLive,
+          konto_id: konto_id,
+          navn: navn,
+          saldo: saldo
+        )
+    )
   end
 end
