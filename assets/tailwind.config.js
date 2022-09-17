@@ -12,6 +12,7 @@ module.exports = {
   theme: {
     fontFamily: {
       'roboto': ['Roboto Slab', 'serif'],
+      'caveat': ['Caveat Brush', 'serif'],
     },
     extend: {
       colors: {
